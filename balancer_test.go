@@ -6,10 +6,20 @@ import (
 )
 
 func TestBalancer(t *testing.T) {
-	assert.Equal(t, true, balancer("[(){}]"), "Balanced standart parantheses")
-	assert.Equal(t, true, balancer("[(dafdsf)&&{fsgdf}bnbhvmhm]"), "Balanced parantheses with symbols")
-	assert.Equal(t, false, balancer("[}(])"), "Unbalanced standart parantheses")
-	assert.Equal(t, false, balancer("[({dfhdjmm]]]]"), "Unbalanced parantheses with symbols")
-	assert.Equal(t, false, balancer(" "), "Empty string")
-	assert.NotEqual(t, true, balancer("Hello, World!"), "Simple text string")
+	testBalancerCases := []struct {
+		value       string
+		want        bool
+		description string
+	}{
+		{"[(){}]", true, "Balanced standart parantheses"},
+		{"[(dafdsf)&&{fsgdf}bnbhvmhm]", true, "Balanced parantheses with symbols"},
+		{"[}(])", false, "Unbalanced standart parantheses"},
+		{"[({dfhdjmm]]]]", false, "Unbalanced parantheses with symbols"},
+		{" ", true, "Empty string"},
+		{"Hello, World!", true, "Simple text string"},
+	}
+	for _, tc := range testBalancerCases {
+		assert.Equal(t, tc.want, balancer(tc.value), tc.description)
+	}
+
 }

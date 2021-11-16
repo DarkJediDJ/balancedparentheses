@@ -3,43 +3,41 @@ package blncdparantheses
 func balancer(s string) bool {
 	var stack []string
 	for _, x := range s {
-		if x == '(' || x == '[' || x == '{' {
-			stack = append(stack, string(x))
-			continue
-		}
-		if len(stack) == 0 {
-			return false
-		}
-		current_char := stack[len(stack)-1]
 		switch x {
+        case'(':
+            stack = append(stack, string(x))
+			continue
+        case'{':
+            stack = append(stack, string(x))
+			continue
+        case'[':
+            stack = append(stack, string(x))
+			continue
 		case ')':
-			if current_char != "(" {
+			if stack[len(stack)-1] != "(" {
 				return false
 			}
-			if len(stack)-1 > 0 {
-				stack = stack[:len(stack)-1]
-			} else {
-				stack[0] = " "
-			}
+            stack =pop(stack)
 		case '}':
-			if current_char != "{" {
+			if stack[len(stack)-1] != "{" {
 				return false
 			}
-			if len(stack)-1 > 0 {
-				stack = stack[:len(stack)-1]
-			} else {
-				stack[0] = " "
-			}
+            stack =pop(stack)
 		case ']':
-			if current_char != "[" {
+            if stack[len(stack)-1] != "[" {
 				return false
 			}
-			if len(stack)-1 > 0 {
-				stack = stack[:len(stack)-1]
-			} else {
-				stack[0] = " "
-			}
+            stack =pop(stack)
 		}
 	}
 	return true
+}
+
+func pop(stack []string) []string{
+    if len(stack)-1 > 0 {
+        stack = stack[:len(stack)-1]
+    } else {
+        stack[0] = " "
+    }
+    return stack
 }

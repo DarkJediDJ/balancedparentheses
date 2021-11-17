@@ -1,32 +1,33 @@
 package blncdparantheses
 
 func balancer(s string) bool {
-	var stack []string
+	var stack []rune
+	parentheses := [3]rune{'(', '[', '{'}
+loop:
 	for _, x := range s {
 		switch x {
 		case '(', '{', '[':
-			stack = append(stack, string(x))
+			stack = append(stack, x)
 
 			continue
 		case ')', '}', ']':
-			if stack[len(stack)-1] != "(" {
-				if stack[len(stack)-1] != "{" {
-					if stack[len(stack)-1] != "[" {
-						return false
-					}
+			for _, i := range parentheses {
+				if stack[len(stack)-1] == i {
+					stack = pop(stack)
+					continue loop
 				}
 			}
-			stack = pop(stack)
+			return false
 		}
 	}
 	return true
 }
 
-func pop(stack []string) []string {
+func pop(stack []rune) []rune {
 	if len(stack)-1 > 0 {
 		stack = stack[:len(stack)-1]
 	} else {
-		stack[0] = " "
+		stack[0] = ' '
 	}
 	return stack
 }

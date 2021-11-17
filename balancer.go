@@ -4,40 +4,29 @@ func balancer(s string) bool {
 	var stack []string
 	for _, x := range s {
 		switch x {
-        case'(':
-            stack = append(stack, string(x))
+		case '(', '{', '[':
+			stack = append(stack, string(x))
+
 			continue
-        case'{':
-            stack = append(stack, string(x))
-			continue
-        case'[':
-            stack = append(stack, string(x))
-			continue
-		case ')':
+		case ')', '}', ']':
 			if stack[len(stack)-1] != "(" {
-				return false
+				if stack[len(stack)-1] != "{" {
+					if stack[len(stack)-1] != "[" {
+						return false
+					}
+				}
 			}
-            stack =pop(stack)
-		case '}':
-			if stack[len(stack)-1] != "{" {
-				return false
-			}
-            stack =pop(stack)
-		case ']':
-            if stack[len(stack)-1] != "[" {
-				return false
-			}
-            stack =pop(stack)
+			stack = pop(stack)
 		}
 	}
 	return true
 }
 
-func pop(stack []string) []string{
-    if len(stack)-1 > 0 {
-        stack = stack[:len(stack)-1]
-    } else {
-        stack[0] = " "
-    }
-    return stack
+func pop(stack []string) []string {
+	if len(stack)-1 > 0 {
+		stack = stack[:len(stack)-1]
+	} else {
+		stack[0] = " "
+	}
+	return stack
 }

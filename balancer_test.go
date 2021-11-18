@@ -11,7 +11,7 @@ func TestBalancer(t *testing.T) {
 		want        bool
 		description string
 	}{
-		{"[(){}]", true, "Balanced standart parantheses"},
+		{"[(){}]", true, "Balanced standard parantheses"},
 		{"[(dafdsf)&&{fsgdf}bnbhvmhm]", true, "Balanced parantheses with symbols"},
 		{"[}(])", false, "Unbalanced standart parantheses"},
 		{"[({dfhdjmm]]]]", false, "Unbalanced parantheses with symbols"},
@@ -19,7 +19,9 @@ func TestBalancer(t *testing.T) {
 		{"Hello, World!", true, "Simple text string"},
 	}
 	for _, tc := range testBalancerCases {
-		assert.Equal(t, tc.want, balancer(tc.value), tc.description)
+		t.Run(tc.description, func(t *testing.T) {
+			assert.Equal(t, tc.want, balancer(tc.value))
+		})
 	}
 
 }

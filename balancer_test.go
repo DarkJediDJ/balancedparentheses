@@ -17,7 +17,7 @@ func TestBalancer(t *testing.T) {
 		{"[({dfhdjmm]]]]", false, "Unbalanced parantheses with symbols"},
 		{" ", true, "Empty string"},
 		{"Hello, World!", true, "Simple text string"},
-		{"[{)()]",false,"Open parantheses string"},
+		{"[{)()]", false, "Open parantheses string"},
 	}
 	for _, tc := range testBalancerCases {
 		t.Run(tc.description, func(t *testing.T) {

@@ -33,7 +33,7 @@ jobs:
         run: |
           nohup go run .
           sleep 5s
-          run: go test -v ./...
+          go test -v ./...
 
   lint:
     strategy:

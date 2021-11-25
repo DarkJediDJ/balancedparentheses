@@ -31,7 +31,8 @@ jobs:
           go-version: 1.17
       - name: Host and test
         run: |
-          go run .
+          nohup go run .
+          sleep 5s
           run: go test -v ./...
 
   lint:

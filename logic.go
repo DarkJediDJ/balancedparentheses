@@ -1,14 +1,13 @@
-package main 
+package main
 
 import (
-	"math/rand"
 	"fmt"
-	"strconv"
 	"io"
+	"math/rand"
 	"net/http"
+	"strconv"
 	"strings"
 )
-
 
 func RandParentheses(len string) string {
 	num, err := strconv.Atoi(len)
@@ -22,7 +21,7 @@ func RandParentheses(len string) string {
 	return s
 }
 
-func GetValue(n int) string{
+func GetValue(n int) string {
 	resp, err := http.Get("http://localhost:8080/generate/" + strconv.Itoa(n))
 	if err != nil {
 		fmt.Println(err)
@@ -34,10 +33,10 @@ func GetValue(n int) string{
 	}
 	line := string(body)
 	commas := strings.LastIndex(line, ":")
-	return line[commas+2:len(line)-2]
+	return line[commas+2 : len(line)-2]
 }
 
-func GetStatus(n int) int{
+func GetStatus(n int) int {
 	resp, err := http.Get("http://localhost:8080/generate/" + strconv.Itoa(n))
 	if err != nil {
 		fmt.Println(err)

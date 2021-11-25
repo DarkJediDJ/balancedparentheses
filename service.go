@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -17,10 +16,13 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
 	}
 	res, err := json.Marshal(line)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(res)
+	_, err = w.Write(res)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)

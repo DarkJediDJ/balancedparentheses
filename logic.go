@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -12,7 +12,7 @@ import (
 func RandParentheses(len string) string {
 	num, err := strconv.Atoi(len)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	s := ""
 	for i := 0; i < num; i++ {
@@ -24,12 +24,12 @@ func RandParentheses(len string) string {
 func GetValue(n int) string {
 	resp, err := http.Get("http://localhost:8080/generate/" + strconv.Itoa(n))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	line := string(body)
 	commas := strings.LastIndex(line, ":")
@@ -39,7 +39,7 @@ func GetValue(n int) string {
 func GetStatus(n int) int {
 	resp, err := http.Get("http://localhost:8080/generate/" + strconv.Itoa(n))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	defer resp.Body.Close()
 	return resp.StatusCode

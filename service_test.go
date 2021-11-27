@@ -7,26 +7,24 @@ import (
 	"testing"
 )
 
+var a App
+
 func TestHealthCheckHandler(t *testing.T) {
-	req, err := http.NewRequest("GET", "generate/5", nil)
+	req, err := http.NewRequest("GET", "/generate/666", nil)
 	if err != nil {
-		fmt.Println("alkfk")
+		fmt.Println("alkfk") // HERE - ?
 		t.Fatal(err)
 	}
 
-	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(generate)
+	response := httptest.NewRecorder()
 
-	handler.ServeHTTP(rr, req)
+	a.New()
+	a.Router.ServeHTTP(response, req)
 
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+	if http.StatusOK != response.Code {
+		t.Errorf("Expected response code %d. Got %d\n", http.StatusOK, response.Code)
 	}
 
-	expected := `{"alive": true}`
-	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
-			rr.Body.String(), expected)
-	}
+	// HERE - do check here
+	// HERE - use test struct with cases
 }

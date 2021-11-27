@@ -10,5 +10,5 @@ var M = map[string]string{
 }
 
 type Parentheses struct {
-	Parenthese string `json:"parentheses"`
+	Line string `json:"parentheses"`
 }

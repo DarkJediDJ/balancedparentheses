@@ -8,7 +8,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
+func generate(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	len := vars["length"]
 	line := Parentheses{
@@ -26,7 +26,7 @@ func returnSingleArticle(w http.ResponseWriter, r *http.Request) {
 }
 func handleRequests() {
 	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/generate/{length}", returnSingleArticle)
+	myRouter.HandleFunc("/generate/{length}", generate)
 	log.Fatal(http.ListenAndServe(":8080", myRouter))
 }
 

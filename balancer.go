@@ -1,4 +1,4 @@
-package blncdparantheses
+package main
 
 func balancer(s string) bool {
 	var stack []rune

@@ -29,6 +29,7 @@ func TestGenerateHandler(t *testing.T) {
 
 	for _, tc := range testServiceCases {
 		t.Run(tc.name, func(t *testing.T) {
+
 			req, err := http.NewRequest("GET", "/generate/"+tc.length, nil)
 			if err != nil {
 				t.Fatal(err)
@@ -39,13 +40,16 @@ func TestGenerateHandler(t *testing.T) {
 			a.New()
 			a.Router.ServeHTTP(response, req)
 			assert.Equal(t, tc.status, response.Code, "Expected response code %d. Got %d\n", tc.status, response.Code)
-			if tc.status == 404 {
+
+			if tc.status != http.StatusOK {
 				t.Skip()
 			}
+
 			data, err := ioutil.ReadAll(response.Body)
 			if err != nil {
 				t.Errorf("expected error to be nil got %v", err)
 			}
+
 			var lines Parentheses
 			err = json.Unmarshal(data, &lines)
 			if err != nil {

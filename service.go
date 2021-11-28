@@ -20,10 +20,12 @@ func generate(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		log.Fatal("Parameter not found")
 	}
+
 	len, err := strconv.Atoi(length)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	line := Parentheses{
 		RandParentheses(len),
 	}
@@ -41,7 +43,7 @@ func generate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Init the API
+// New creates router with handler
 func (a *App) New() {
 	myRouter := mux.NewRouter().StrictSlash(false)
 	myRouter.HandleFunc("/generate/{length:[0-9]+}", generate)
@@ -49,7 +51,7 @@ func (a *App) New() {
 	a.Router = myRouter
 }
 
-// And then run it
+// Run starts server
 func (a *App) Run(addr string) {
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }

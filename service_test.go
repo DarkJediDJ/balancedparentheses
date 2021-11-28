@@ -14,19 +14,22 @@ var a App
 
 func TestGenerateHandler(t *testing.T) {
 	testServiceCases := []struct {
-		route string
-		want  int
-		name  string
+		length string
+		want   int
+		name   string
+		status int
 	}{
-		{"5", 5, "Standard parentheses string"},
-		{"1000", 1000, "Long parentheses string"},
-		{"1", 1, "Short parentheses string"},
-		{"0", 0, "Emptyy parentheses string"},
+		{"5", 5, "Standard value", http.StatusOK},
+		{"1000", 1000, "Long value", http.StatusOK},
+		{"1", 1, "Short value", http.StatusOK},
+		{"0", 0, "Zero value", http.StatusOK},
+		{"?", 0, "Non int char", http.StatusNotFound},
+		{"-1", 0, "Negative value", http.StatusNotFound},
 	}
 
 	for _, tc := range testServiceCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest("GET", "/generate/"+tc.route, nil)
+			req, err := http.NewRequest("GET", "/generate/"+tc.length, nil)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -35,7 +38,10 @@ func TestGenerateHandler(t *testing.T) {
 
 			a.New()
 			a.Router.ServeHTTP(response, req)
-			assert.Equal(t, http.StatusOK, response.Code, "Expected response code %d. Got %d\n", http.StatusOK, response.Code)
+			assert.Equal(t, tc.status, response.Code, "Expected response code %d. Got %d\n", tc.status, response.Code)
+			if tc.status == 404 {
+				t.Skip()
+			}
 			data, err := ioutil.ReadAll(response.Body)
 			if err != nil {
 				t.Errorf("expected error to be nil got %v", err)

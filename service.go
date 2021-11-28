@@ -25,7 +25,7 @@ func generate(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	line := Parentheses{
-		RandParentheses(len), 
+		RandParentheses(len),
 	}
 
 	res, err := json.Marshal(line)

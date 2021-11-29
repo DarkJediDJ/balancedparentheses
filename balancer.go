@@ -1,6 +1,7 @@
 package main
 
-func balancer(s string) bool {
+//Balancer checks string for balanced parentheses
+func Balancer(s string) bool {
 	var stack []rune
 	m := map[rune]rune{
 		')': '(',

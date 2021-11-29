@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -43,11 +44,23 @@ func generate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func percents(w http.ResponseWriter, r *http.Request) {
+	m := Call()
+
+	result := Percents{
+		m[2],
+		m[4],
+		m[8],
+	}
+
+	fmt.Println(result)
+}
+
 // New creates router with handler
 func (a *App) New() {
 	myRouter := mux.NewRouter().StrictSlash(false)
 	myRouter.HandleFunc("/generate/{length:[0-9]+}", generate)
-
+	myRouter.HandleFunc("/generate/result", percents)
 	a.Router = myRouter
 }
 

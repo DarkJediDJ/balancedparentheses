@@ -10,8 +10,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var a App
-
 func TestGenerateHandler(t *testing.T) {
 	testServiceCases := []struct {
 		length string
@@ -37,8 +35,8 @@ func TestGenerateHandler(t *testing.T) {
 
 			response := httptest.NewRecorder()
 
-			a.New()
-			a.Router.ServeHTTP(response, req)
+			A.New()
+			A.Router.ServeHTTP(response, req)
 			assert.Equal(t, tc.status, response.Code, "Expected response code %d. Got %d\n", tc.status, response.Code)
 
 			if tc.status != http.StatusOK {

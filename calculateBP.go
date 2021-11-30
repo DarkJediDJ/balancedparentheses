@@ -42,7 +42,9 @@ func CalculateBalancedPercentage() map[int]int {
 				count++
 			}
 		}
+
 		res[j] = (count * 100) / 1000
 	}
+
 	return res
 }

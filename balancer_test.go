@@ -19,10 +19,11 @@ func TestBalancer(t *testing.T) {
 		{" ", true, "Empty string"},
 		{"Hello, World!", true, "Simple text string"},
 		{"[{)()]", false, "Open parantheses string"},
+		{"}{)()]", false, "Close bracket string"},
 	}
 	for _, tc := range testBalancerCases {
 		t.Run(tc.description, func(t *testing.T) {
-			assert.Equal(t, tc.want, balancer(tc.value))
+			assert.Equal(t, tc.want, Balancer(tc.value))
 		})
 	}
 

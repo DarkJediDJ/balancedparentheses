@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -45,7 +44,7 @@ func generate(w http.ResponseWriter, r *http.Request) {
 }
 
 func percents(w http.ResponseWriter, r *http.Request) {
-	m := Call()
+	m := CalculateBalancedPercentage()
 
 	result := Percents{
 		m[2],
@@ -53,7 +52,17 @@ func percents(w http.ResponseWriter, r *http.Request) {
 		m[8],
 	}
 
-	fmt.Println(result)
+	res, err := json.Marshal(result)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+
+	_, err = w.Write(res)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 // New creates router with handler

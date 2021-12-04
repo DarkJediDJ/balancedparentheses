@@ -15,6 +15,9 @@ func Balancer(s string) bool {
 
 			continue
 		case ')', '}', ']':
+			if len(stack) == 0 {
+				return false
+			}
 			if stack[len(stack)-1] != m[x] {
 				return false
 			}

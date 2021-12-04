@@ -14,9 +14,9 @@ type Parentheses struct {
 }
 
 type Percents struct {
-	Two   int `json:"Percent for 2"`
-	Four  int `json:"Percent for 4"`
-	Eight int `json:"Percent for 8"`
+	Two   int `json:"Percent for 2 is"`
+	Four  int `json:"Percent for 4 is"`
+	Eight int `json:"Percent for 8 is"`
 }
 
 var A App

@@ -4,23 +4,20 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"regexp"
 	"strconv"
-
-	"github.com/gorilla/mux"
+	"strings"
 )
 
-type App struct {
-	Router *mux.Router
-}
-
 func generate(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-
-	length, ok := vars["length"]
-	if !ok {
-		log.Fatal("Parameter not found")
+	URL := r.URL.RequestURI()
+	length := URL[strings.LastIndex(URL, "/")+1:]
+	numRexExp := regexp.MustCompile(`^\d+$`)
+	if !numRexExp.MatchString(length) {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("400 - Bad Request"))
+		return
 	}
-
 	len, err := strconv.Atoi(length)
 	if err != nil {
 		log.Fatal(err)
@@ -65,22 +62,11 @@ func percents(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// New creates router with handler
-func (a *App) New() {
-	myRouter := mux.NewRouter().StrictSlash(false)
-	myRouter.HandleFunc("/generate/{length:[0-9]+}", generate)
-	myRouter.HandleFunc("/generate/result", percents)
-	a.Router = myRouter
-}
-
-// Run starts server
-func (a *App) Run(addr string) {
-	log.Fatal(http.ListenAndServe(addr, a.Router))
+func handleRequests(adr string) {
+	http.HandleFunc("/generate/", generate)
+	log.Fatal(http.ListenAndServe(adr, nil))
 }
 
 func main() {
-	a := App{}
-	a.New()
-
-	a.Run(":8082")
+	handleRequests(":8080")
 }

@@ -21,8 +21,8 @@ func TestGenerateHandler(t *testing.T) {
 		{"1000", 1000, "Long value", http.StatusOK},
 		{"1", 1, "Short value", http.StatusOK},
 		{"0", 0, "Zero value", http.StatusOK},
-		{"?", 0, "Non int char", http.StatusNotFound},
-		{"-1", 0, "Negative value", http.StatusNotFound},
+		{"?", 0, "Non int char", http.StatusBadRequest},
+		{"-1", 0, "Negative value", http.StatusBadRequest},
 	}
 
 	for _, tc := range testServiceCases {
@@ -34,9 +34,7 @@ func TestGenerateHandler(t *testing.T) {
 			}
 
 			response := httptest.NewRecorder()
-
-			A.New()
-			A.Router.ServeHTTP(response, req)
+			generate(response, req)
 			assert.Equal(t, tc.status, response.Code, "Expected response code %d. Got %d\n", tc.status, response.Code)
 
 			if tc.status != http.StatusOK {

@@ -27,8 +27,7 @@ func TestCalculateBalancedPercentage(t *testing.T) {
 
 			response := httptest.NewRecorder()
 
-			A.New()
-			A.Router.ServeHTTP(response, req)
+			percents(response, req)
 			assert.Equal(t, tc.status, response.Code, "Expected response code %d. Got %d\n", tc.status, response.Code)
 
 			data, err := ioutil.ReadAll(response.Body)

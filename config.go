@@ -18,5 +18,3 @@ type Percents struct {
 	Four  int `json:"Percent for 4 is"`
 	Eight int `json:"Percent for 8 is"`
 }
-
-var A App

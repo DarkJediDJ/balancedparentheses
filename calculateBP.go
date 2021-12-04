@@ -22,9 +22,7 @@ func CalculateBalancedPercentage() map[int]int {
 			}
 
 			response := httptest.NewRecorder()
-
-			A.New()
-			A.Router.ServeHTTP(response, req)
+			generate(response, req)
 
 			data, err := ioutil.ReadAll(response.Body)
 			if err != nil {
